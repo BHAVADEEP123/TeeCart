@@ -18,7 +18,7 @@ const Signup = () => {
       console.log('User created successfully:', user);
       alert("New user has been created!");
       // const sesssionPromise = account.createEmailPasswordSession()
-      const promise1 = account.createSession(email, password).then(
+      const promise1 = await account.createEmailPasswordSession(email, password).then(
         function(response){
           console.log('success1:',response)
         }
@@ -27,7 +27,7 @@ const Signup = () => {
           console.log('failed1:',error);
         }
       );
-      const promise2 = account.createVerification('http://localhost:5174/verify').then(
+      const promise2 = await account.createVerification('http://localhost:5173/verify').then(
         function(response){
           console.log('success2:',response)
         }
