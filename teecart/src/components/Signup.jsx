@@ -16,24 +16,14 @@ const Signup = () => {
     try {
       const user = await account.create('unique()', email, password, username);
       console.log('User created successfully:', user);
-      
-      // const sesssionPromise = account.createEmailPasswordSession()
       const promise1 = await account.createEmailPasswordSession(email, password).then(
         function(response){
           console.log('success1:',response)
         }
-      ).catch(
-        function (error){
-          console.log('failed1:',error);
-        }
-      );
+      )
       const promise2 = await account.createVerification('http://localhost:5173/verify').then(
         function(response){
           console.log('success2:',response)
-        }
-      ).catch(
-        function (error){
-          console.log('failed2:',error);
         }
       )
       alert("Verification email has been sent! please verify");

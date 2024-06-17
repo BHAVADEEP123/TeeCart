@@ -4,30 +4,31 @@ import client from '../Config/appwriteConfig';
 import { useNavigate } from "react-router-dom";
 
 const Verify = () => {
-    const navigate = useNavigate();
-    const render=()=>{
-        
-        try {
-          const account = new Account(client)
+  const navigate = useNavigate();
+  const render = () => {
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const secret = urlParams.get('secret');
-        const userId = urlParams.get('userId');
+    try {
+      const account = new Account(client)
 
-        const promise = account.updateVerification(userId, secret).then(
-          function(response){
-            console.log('verfication done')
-            navigate('/')
-          }
-        )
-        } catch (error) {
-          alert('verification failed')
-          navigate('/signup')
+      const urlParams = new URLSearchParams(window.location.search);
+      const secret = urlParams.get('secret');
+      const userId = urlParams.get('userId');
+
+      const promise = account.updateVerification(userId, secret).then(
+        async function (response) {
+          console.log('verfication done')
+          await account.deleteSession('current');
+          navigate('/login')
         }
+      )
+    } catch (error) {
+      alert('verification failed')
+      navigate('/signup')
     }
-    useEffect(()=>{
-        render();
-    })
+  }
+  useEffect(() => {
+    render();
+  })
 
   return (
     <>verify</>

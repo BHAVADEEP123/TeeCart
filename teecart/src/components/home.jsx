@@ -1,8 +1,14 @@
 import React from 'react'
+import { useAuth } from '../utils/AuthContext'
 
 const Home = () => {
+  const {user,handleUserLogin,handleUserLogout} = useAuth();
   return (
-    <h1>home</h1>
+    <>
+    home <br />
+    <button onClick={handleUserLogout}>logout</button>
+    </>
+    
   )
 }
 
