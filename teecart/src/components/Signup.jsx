@@ -16,7 +16,7 @@ const Signup = () => {
     try {
       const user = await account.create('unique()', email, password, username);
       console.log('User created successfully:', user);
-      alert("New user has been created!");
+      
       // const sesssionPromise = account.createEmailPasswordSession()
       const promise1 = await account.createEmailPasswordSession(email, password).then(
         function(response){
@@ -36,6 +36,7 @@ const Signup = () => {
           console.log('failed2:',error);
         }
       )
+      alert("Verification email has been sent! please verify");
       
       
     } catch (error) {

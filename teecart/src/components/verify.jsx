@@ -4,9 +4,11 @@ import client from '../Config/appwriteConfig';
 import { useNavigate } from "react-router-dom";
 
 const Verify = () => {
+    const navigate = useNavigate();
     const render=()=>{
-        const navigate = useNavigate();
-        const account = new Account(client)
+        
+        try {
+          const account = new Account(client)
 
         const urlParams = new URLSearchParams(window.location.search);
         const secret = urlParams.get('secret');
@@ -17,13 +19,11 @@ const Verify = () => {
             console.log('verfication done')
             navigate('/')
           }
-        ).catch(
-          function(error){
-            console.log('verfication failed')
-            alert('failed to verify')
-            navigate('/signup')
-          }
         )
+        } catch (error) {
+          alert('verification failed')
+          navigate('/signup')
+        }
     }
     useEffect(()=>{
         render();
