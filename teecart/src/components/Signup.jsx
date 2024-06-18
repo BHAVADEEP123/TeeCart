@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../stylings/Signup.css';
 import user_icon from '../assets/person.png';
 import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
+import show_password_icon from '../assets/show.png';
+import hide_password_icon from '../assets/hide.png';
 import { account } from '../Config/appwriteConfig'; 
 
 const Signup = () => {
@@ -11,6 +13,20 @@ const Signup = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordHasContent, setPasswordHasContent] = useState(false);
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+  useEffect(() => {
+    // Check if all fields are filled
+    if (username && password && email) {
+      setIsButtonEnabled(true);
+    } else {
+      setIsButtonEnabled(false);
+    }
+  }, [username,password,email]);
 
   const handlesubmit = async () => {
     try {
@@ -36,30 +52,39 @@ const Signup = () => {
   };
 
   return (
-    <div className='container'>
-      <div className="header">
+    <div className='auth-container'>
+      <div className="auth-header">
         <div className="text">Sign Up</div>
         <div className="underline"></div>
       </div>
-      <div className="inputs">
-        <div className="input">
+      <div className="auth-inputs">
+        <div className="auth-input">
           <img src={user_icon} alt="User" />
           <input type="text" placeholder='Name' onChange={(e) => setUsername(e.target.value)} />
         </div>
-        <div className="input">
+        <div className="auth-input">
           <img src={email_icon} alt="Email" />
           <input type="email" placeholder='Email-id' onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div className="input">
+        <div className="auth-input">
           <img src={password_icon} alt="Password" />
-          <input type="password" placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+          <input type={passwordVisible ? 'text' : 'password'} placeholder='Password' onChange={(e) => {setPassword(e.target.value); setPasswordHasContent(e.target.value.length>0)} } />
+          <div className="password-toggle">
+          {passwordHasContent && (
+            <img
+              src={passwordVisible ? hide_password_icon : show_password_icon}
+              alt={passwordVisible ? 'Hide password' : 'Show password'}
+              onClick={togglePasswordVisibility}
+            />
+          )}
+          </div>
         </div>
       </div>
-      <div className="Old-User">
-        Already a Registered User? <span onClick={() => navigate('/login')}>Click Here to Login!</span>
+      <div className="not-User">
+        already have an account? <span onClick={() => navigate('/login')}>Login</span>
       </div>
-      <div className="submit-container">
-        <div className="submit" onClick={handlesubmit}>Sign Up</div>
+      <div className="auth-submit-container">
+        <div className={`auth-submit ${isButtonEnabled ? '' : 'disabled'}`} onClick={handlesubmit}>Sign Up</div>
       </div>
     </div>
   );
