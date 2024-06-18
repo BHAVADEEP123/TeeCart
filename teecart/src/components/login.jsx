@@ -37,7 +37,7 @@ const Login = () => {
   return (
     <div className='auth-container'>
       <div className="auth-header">
-        <div className="text">login</div>
+        <div className="text">Tee-Cart</div>
       </div>
       <div className="auth-inputs">
         <div className="auth-input">

@@ -54,7 +54,7 @@ const Signup = () => {
   return (
     <div className='auth-container'>
       <div className="auth-header">
-        <div className="text">Sign Up</div>
+        <div className="text">Tee-Cart</div>
         <div className="underline"></div>
       </div>
       <div className="auth-inputs">

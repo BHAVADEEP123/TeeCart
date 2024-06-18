@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Knewave&display=swap');
+
 body {
     font-family: Arial, sans-serif;
     background-color: #fafafa;
@@ -19,8 +21,9 @@ body {
 }
 
 .auth-header .text {
-    font-size: 24px;
-    font-weight: bold;
+    font-family: "Knewave", system-ui;
+    font-size: 30px;
+    font-style: normal;
     margin-bottom: 20px;
 }
 
