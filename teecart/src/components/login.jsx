@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import '../stylings/login.css';
 import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
-import client from '../Config/appwriteConfig';
-import { Account } from 'appwrite';
 import { useAuth } from '../utils/AuthContext';
 
 const Login = () => {
@@ -16,7 +14,6 @@ const Login = () => {
       navigate('/')
     }
   }, []);
-  const account = new Account(client);
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
