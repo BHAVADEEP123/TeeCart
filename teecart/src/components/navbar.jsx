@@ -1,13 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart, faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 import '../stylings/navbar.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../utils/AuthContext';
 
 const Navbar = () => {
+    const {user} = useAuth();
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    const [userName,setUserName] = useState('sign in')
+    useEffect(()=>{
+      if(user){
+        console.log('user is :',user.name)
+        setUserName(user.name)
+      }
+      else{
+        setUserName('sign in')
+      }
+    })
     const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
     };
@@ -24,7 +35,7 @@ const Navbar = () => {
       <div className={`navbar-items ${isMenuOpen ? 'open' : ''}`}>
         <a href="/" className="navbar-link">Home</a>
         <a href="#about" className="navbar-link">About</a>
-        <a href="#contact" className="navbar-link">Contact</a> 
+        <a className="navbar-link">hi,{userName}</a> 
       </div>
       
       <div className={`navbar-items ${isMenuOpen ? 'open' : ''}`}>

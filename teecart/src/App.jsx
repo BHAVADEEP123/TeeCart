@@ -9,6 +9,8 @@ import Signup from './components/Signup';
 import Verify from './components/verify';
 import Profile from './components/profile';
 import Applayout from './components/applayout';
+import Loader from './components/loader';
+import Search from './components/search';
 function App() {
   return (
     <Router>
@@ -19,6 +21,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/verify' element={<Verify />} />
+            <Route path='/search' element={<Search/>} />
             <Route element={<PrivateRoutes />}>
               <Route path='/profile' element={<Profile />} />
             </Route>

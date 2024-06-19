@@ -6,7 +6,7 @@ import '../stylings/applayout.css'
 
 const Applayout = ({ children }) => {
     const location = useLocation();
-    const showNavbarAndFooter = location.pathname !== '/login';
+    const showNavbarAndFooter = location.pathname !=='/search';
     // showNavbarAndFooter = location.pathname !== '/signup';
     return (
         <div className='layout-container'>
