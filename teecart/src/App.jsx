@@ -8,19 +8,22 @@ import Login from './components/login';
 import Signup from './components/Signup';
 import Verify from './components/verify';
 import Profile from './components/profile';
+import Applayout from './components/applayout';
 function App() {
   return (
     <Router>
       <AuthProvider>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/verify' element={<Verify />} />
-        <Route element={<PrivateRoutes />}>
-          <Route path='/profile' element={<Profile/>}/>
-        </Route>
-      </Routes>
+        <Applayout>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/verify' element={<Verify />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path='/profile' element={<Profile />} />
+            </Route>
+          </Routes>
+        </Applayout>
       </AuthProvider>
     </Router>
   );
