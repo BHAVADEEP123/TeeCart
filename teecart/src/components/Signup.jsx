@@ -6,7 +6,7 @@ import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 import show_password_icon from '../assets/show.png';
 import hide_password_icon from '../assets/hide.png';
-import { account } from '../Config/appwriteConfig'; 
+import { COLLECTION_PROFILES, DATABASEID, account, database } from '../Config/appwriteConfig'; 
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -32,6 +32,8 @@ const Signup = () => {
     try {
       const user = await account.create('unique()', email, password, username);
       console.log('User created successfully:', user);
+      const promise0 = await database.createDocument(DATABASEID,COLLECTION_PROFILES,user.$id,{'username':username,'email':email});
+      console.log('profile created',promise0);
       const promise1 = await account.createEmailPasswordSession(email, password).then(
         function(response){
           console.log('success1:',response)
