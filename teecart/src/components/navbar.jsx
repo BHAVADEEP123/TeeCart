@@ -4,21 +4,24 @@ import { faUser, faShoppingCart, faBars, faTimes, faSearch,faSignInAlt, faSignOu
 import '../stylings/navbar.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
+import { COLLECTION_CATEGORIES, DATABASEID, database } from '../Config/appwriteConfig';
 
 const Navbar = () => {
     const {user,handleUserLogout} = useAuth();
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [userName,setUserName] = useState('sign in')
+    const [userName,setUserName] = useState('sign in');
+    const data = null;
     useEffect(()=>{
       if(user){
-        console.log('user is :',user.name)
+        // console.log('user is :',user.name)
         setUserName(user.name)
       }
       else{
         setUserName('sign in')
       }
-    })
+    });
+    
     const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
     };
@@ -40,10 +43,10 @@ const Navbar = () => {
       
       <div className={`navbar-items ${isMenuOpen ? 'open' : ''}`}>
         <div className="navbar-icons">
-          <FontAwesomeIcon icon={faSearch} className='navbar-icon'/>
+          <FontAwesomeIcon icon={faSearch} className='navbar-icon' onClick={(e)=>{e.preventDefault();navigate('/search',{state:data})}}/>
           <FontAwesomeIcon icon={faShoppingCart} className="navbar-icon" />
           <FontAwesomeIcon icon={faUser} className="navbar-icon" onClick={(e)=>{e.preventDefault();navigate('/profile')}} />
-          {user&&<FontAwesomeIcon icon={faSignOutAlt} className='navbar-icon' onClick={{handleUserLogout}}/>}
+          {user&&<FontAwesomeIcon icon={faSignOutAlt} className='navbar-icon' onClick={(e)=>{e.preventDefault();handleUserLogout()}}/>}
           {!user && <FontAwesomeIcon icon={faSignInAlt} className='navbar-icon' onClick={navigate('/login')}/>}
         </div>
       </div>
