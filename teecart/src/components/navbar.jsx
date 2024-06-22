@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faShoppingCart, faBars, faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faShoppingCart, faBars, faTimes, faSearch,faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import '../stylings/navbar.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
 
 const Navbar = () => {
-    const {user} = useAuth();
+    const {user,handleUserLogout} = useAuth();
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userName,setUserName] = useState('sign in')
@@ -43,6 +43,8 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faSearch} className='navbar-icon'/>
           <FontAwesomeIcon icon={faShoppingCart} className="navbar-icon" />
           <FontAwesomeIcon icon={faUser} className="navbar-icon" onClick={(e)=>{e.preventDefault();navigate('/profile')}} />
+          {user&&<FontAwesomeIcon icon={faSignOutAlt} className='navbar-icon' onClick={{handleUserLogout}}/>}
+          {!user && <FontAwesomeIcon icon={faSignInAlt} className='navbar-icon' onClick={navigate('/login')}/>}
         </div>
       </div>
       </div>
