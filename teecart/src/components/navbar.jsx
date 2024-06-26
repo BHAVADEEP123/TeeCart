@@ -36,7 +36,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-links">
       <div className={`navbar-items ${isMenuOpen ? 'open' : ''}`}>
-        <a href="/" className="navbar-link">Home</a>
+        <a  className="navbar-link" onClick={(e)=>{e.preventDefault();navigate('/')}}>Home</a>
         <a href="#about" className="navbar-link">About</a>
         <a className="navbar-link">hi,{userName}</a> 
       </div>
@@ -44,10 +44,10 @@ const Navbar = () => {
       <div className={`navbar-items ${isMenuOpen ? 'open' : ''}`}>
         <div className="navbar-icons">
           <FontAwesomeIcon icon={faSearch} className='navbar-icon' onClick={(e)=>{e.preventDefault();navigate('/search',{state:data})}}/>
-          <FontAwesomeIcon icon={faShoppingCart} className="navbar-icon" />
+          <FontAwesomeIcon icon={faShoppingCart} className="navbar-icon" onClick={(e)=>{e.preventDefault();navigate('/cart')}}/>
           <FontAwesomeIcon icon={faUser} className="navbar-icon" onClick={(e)=>{e.preventDefault();navigate('/profile')}} />
           {user&&<FontAwesomeIcon icon={faSignOutAlt} className='navbar-icon' onClick={(e)=>{e.preventDefault();handleUserLogout()}}/>}
-          {!user && <FontAwesomeIcon icon={faSignInAlt} className='navbar-icon' onClick={navigate('/login')}/>}
+          {!user && <FontAwesomeIcon icon={faSignInAlt} className='navbar-icon' onClick={(e)=>{e.preventDefault();navigate('/login')}}/>}
         </div>
       </div>
       </div>
