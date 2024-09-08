@@ -142,6 +142,7 @@ const Cart = () => {
 
     // Save PDF
     pdf.save('shopping_cart.pdf');
+    alert('order placed succesfully 🤩');
     getCartItems();
     setIsLoading(false)
   }
@@ -273,7 +274,7 @@ const Cart = () => {
               <p>{((totalPrice * 105) / 100).toFixed(2)}</p>
             </div>
             <div className="buy-now">
-              <button onClick={(e) => { e.preventDefault(); buy_now() }}>Buy now</button>
+              <button onClick={(e) => { e.preventDefault(); buy_now(); }}>Buy now</button>
             </div>
           </div>
         </div>
