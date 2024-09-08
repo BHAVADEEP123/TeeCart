@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "../stylings/cart.css";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import {
   COLLECTION_ITEMLOG,
   DATABASEID,
@@ -15,6 +18,8 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
+  const navigate = useNavigate();
+  const cartRef = useRef();
   const calculateTotalPrice = (items) => {
     // setIsLoading(true)
     if (items) {
@@ -25,14 +30,14 @@ const Cart = () => {
     }
     // setIsLoading(false)
   };
-  const changeCartItem = async(index,q)=>{
+  const changeCartItem = async (index, q) => {
     await database.updateDocument(
-        DATABASEID,
-        COLLECTION_ITEMLOG,
-        cartItems[index].$id,
-        {
-            Quantity: cartItems[index].Quantity+q,
-        }
+      DATABASEID,
+      COLLECTION_ITEMLOG,
+      cartItems[index].$id,
+      {
+        Quantity: cartItems[index].Quantity + q,
+      }
     )
   }
   const increaseQuantity = (index) => {
@@ -46,7 +51,7 @@ const Cart = () => {
       setCartItems(newCartItems); // Update the state
       setIsLoading(false);
       calculateTotalPrice(newCartItems);
-      changeCartItem(index,1);
+      changeCartItem(index, 1);
     }
   };
 
@@ -59,10 +64,10 @@ const Cart = () => {
         Quantity: newCartItems[index].Quantity - 1, // Update the quantity
       };
       setCartItems(newCartItems);
-       // Update the state
-       calculateTotalPrice(newCartItems);
+      // Update the state
+      calculateTotalPrice(newCartItems);
       setIsLoading(false);
-      changeCartItem(index,-1);
+      changeCartItem(index, -1);
     }
   };
 
@@ -70,7 +75,7 @@ const Cart = () => {
     setIsLoading(true);
     const newCartItems = cartItems.filter((_, i) => i !== index); // Create a new array excluding the item
     setCartItems(newCartItems);
-    
+
     setIsLoading(false);
     calculateTotalPrice(newCartItems);
     await database.deleteDocument(
@@ -82,45 +87,80 @@ const Cart = () => {
   const getCartItems = async () => {
     await database
       .listDocuments(DATABASEID, COLLECTION_ITEMLOG, [
-        
+
         Query.and([
-          Query.equal("profile",user.$id),
-          Query.equal("order",false)
+          Query.equal("profile", user.$id),
+          Query.equal("order", false)
         ])
       ])
       .then((promise) => {
         console.log("mycart,", promise);
         setCartItems(promise.documents);
         calculateTotalPrice(promise.documents);
- 
+
       });
     setIsLoading(false);
-    
+
   };
   useEffect(() => {
-    
+
 
     getCartItems();
   }, []);
 
-  const buy_now = async()=>{
-    for(let i=0;i<cartItems.length;i++){
+  const buy_now = async () => {
+    for (let i = 0; i < cartItems.length; i++) {
       await database.updateDocument(
         DATABASEID,
         COLLECTION_ITEMLOG,
         cartItems[i].$id,
         {
-          'order':true
+          'order': true
         }
       )
     }
     setIsLoading(true);
+    const cartElement = cartRef.current;
+    const canvas = await html2canvas(cartElement);
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF();
+    const imgWidth = 190;
+    const pageHeight = 290;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    // Save PDF
+    pdf.save('shopping_cart.pdf');
     getCartItems();
     setIsLoading(false)
   }
 
   if (isLoading) {
     return <Loader />;
+  }
+  if (cartItems.length === 0) {
+    return (
+      <>
+        <div className="empty-cart-img">
+          <img src="https://cloud.appwrite.io/v1/storage/buckets/6673267f0009dd71777f/files/66dd49ac0000c33852e4/view?project=666d5a67000b098c3384&project=666d5a67000b098c3384&mode=admin" alt="" />
+          <button className="shop-btn" onClick={(e) => {
+            e.preventDefault();
+            navigate('/search');
+          }}>Shop Now</button>
+        </div>
+      </>
+    )
   }
   return (
     <div className="cart-container">
@@ -210,7 +250,7 @@ const Cart = () => {
           </tbody>
         </table>
       </div>
-      <div className="payment-info">
+      <div className="payment-info" ref={cartRef}>
         <div className="heading">
           <h1>payment info</h1>
           <h1>Order summary</h1>
@@ -233,7 +273,7 @@ const Cart = () => {
               <p>{((totalPrice * 105) / 100).toFixed(2)}</p>
             </div>
             <div className="buy-now">
-              <button onClick={(e)=>{e.preventDefault();buy_now()}}>Buy now</button>
+              <button onClick={(e) => { e.preventDefault(); buy_now() }}>Buy now</button>
             </div>
           </div>
         </div>

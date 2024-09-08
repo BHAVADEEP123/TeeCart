@@ -136,7 +136,7 @@
   
   .search-item-grid {
     flex: 1 0 21%; /* Default width for larger screens */
-    max-width: 21%;
+    max-width: 50%;
     border-radius: 8px;
     overflow: hidden;
     /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 import Navbar from './navbar';
+import Footer from './footer';
 
 import '../stylings/applayout.css'
 
@@ -17,7 +18,7 @@ const Applayout = ({ children }) => {
                 {children}
             </div>
             <div className='layout-footer'>
-                {showNavbarAndFooter && <h1>footer</h1> }
+                {showNavbarAndFooter && <Footer/> }
             </div>
         </div>
     )

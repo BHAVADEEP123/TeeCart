@@ -14,6 +14,8 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "appwrite": "^15.0.0",
     "dotenv": "^16.4.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "ldrs": "^1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -94,6 +94,7 @@ const Product = () => {
           console.log('adding new');
           createAndAdd(profileData);
         }
+        alert('added to cart 🥳');
       }
     )
   }

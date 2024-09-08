@@ -163,3 +163,14 @@
     /* Darker blue on hover */
     color: black;
   }
+
+
+  .empty-cart-img{
+    display: flex;
+    flex-direction: column;
+  }
+
+ .empty-cart-img img{
+  width: 300px;
+  height: 300px;
+ }

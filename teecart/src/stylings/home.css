@@ -1,0 +1,64 @@
+.homepage-container{
+    width: 90%;
+}
+
+.banner {
+    background-image: url('https://cloud.appwrite.io/v1/storage/buckets/6673267f0009dd71777f/files/66dd45c6001a0e977c34/view?project=666d5a67000b098c3384&project=666d5a67000b098c3384&mode=admin');
+    /* background-color: #7e7e7e; */
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.banner-content h2 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.banner-content p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.shop-btn {
+    background-color: #fe6b42;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.shop-btn:hover{
+    background-color: #fff;
+    color: #333;
+    border: 2px solid #333;
+}
+
+.category-grid {
+    padding: 40px;
+    text-align: center;
+}
+
+.categories {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.category-card {
+    width: 200px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #eee;
+    margin: 10px;
+}
+
+.footer-content {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}

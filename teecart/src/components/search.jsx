@@ -63,6 +63,11 @@ const Search = () => {
     if (!rcv_data) {
       getCategories();
     }
+    else{
+      setIsLoading(true);
+      setShowProducts(rcv_data);
+      setIsLoading(false);
+    }
   }, []);
   if (isLoading) {
     return (
