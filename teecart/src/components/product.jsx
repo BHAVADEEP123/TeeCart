@@ -48,7 +48,7 @@ const Product = () => {
       'unique()',
       {
         Quantity: quantity,
-        created_at: currentDatetime.toLocaleString(),
+        created_at: currentDatetime,
         product: productData.$id,
         order: false,
         profile: profileData.$id,
